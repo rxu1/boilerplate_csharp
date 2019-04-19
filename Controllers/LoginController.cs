@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WeddingPlanner.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
 namespace WeddingPlanner.Controllers
@@ -21,14 +23,20 @@ namespace WeddingPlanner.Controllers
     [HttpGet("")]
     public IActionResult Index()
     {
-      return View();
+      return View("Index");
     }
 
     [HttpPost("register")]
-    public IActionResult Register(Registration form)
+    public IActionResult Register(User newUser)
     {
       if (ModelState.IsValid)
       {
+        var userInDb = dbContext.Users.FirstOrDefault(u => u.Email == form.Email);
+        if (userInDb != null)
+        {
+          ModelState.AddModelError("Email", "This email is already taken!");
+          return View("Index");
+        }
         User newUser = new User()
         {
           FirstName = form.FirstName, 
@@ -41,8 +49,10 @@ namespace WeddingPlanner.Controllers
 
         dbContext.Users.Add(newUser);
         dbContext.SaveChanges();
-
-        return View("Success");
+        var userToLogIn = dbContext.Users.FirstOrDefault(u => u.Email == newUser.Email);
+        HttpContext.Session.SetInt32("UserId", userToLogIn.UserId);
+        return RedirectToAction("Dashboard", "Dashboard");
+        // return View("Success");
       }
       else
       {
@@ -65,16 +75,21 @@ namespace WeddingPlanner.Controllers
         }
         else
         {
+          //initialize hasher object
           var hasher = new PasswordHasher<Login>();
+
+          //verify password w/ what's stored in db
           var result = hasher.VerifyHashedPassword(form, userInDb.Password, form.LoginPassword);
+
           if(result == 0)
           {
-            ModelState.AddModelError("Email", "Invalid Email/Password");
+            ModelState.AddModelError("LoginEmail", "Invalid Email/Password");
             return View("Index");
           }
           else 
           {
-            return View("Success");
+            HttpContext.Session.SetInt32("UserId", userInDb.UserId);
+            return RedirectToAction("Dashboard", "Dashboard");
           }
         }
       }
@@ -82,6 +97,13 @@ namespace WeddingPlanner.Controllers
       {
         return View("Index");
       }
+    }
+
+    [HttpGet("logout")]
+    public IActionResult Logout()
+    {
+      HttpContext.Session.Clear();
+      return RedirectToAction("Index");
     }
   }
 }
