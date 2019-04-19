@@ -1,0 +1,51 @@
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@model List<Wedding>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Welcome!</h1>
+    </div>
+    <div class="col-md-6 text-right">
+      <a href="/add/wedding" class="btn btn-primary">Add Wedding</a>
+      <a href="/logout" class="btn btn-secondary">Logout</a>
+    </div>
+  </div>
+  <div class="row">
+    <table class="table table-striped">
+      <thead>
+        <th scope="col">Lucky Couple</th>
+        <th scope="col">Wedding Date</th>
+        <th scope="col">Guest Count</th>
+        <th scope="col">Actions</th>
+      </thead>
+    @foreach (var w in Model)
+    {
+      <tbody>
+        <tr>
+          <td><a href="/view/wedding/@w.WeddingId">@w.WedderOne & @w.WedderTwo</a></td>
+          <td>@w.WeddingDate</td>
+          <td>@w.Guests.Count</td>
+          <td>
+            @if(@w.UserId == @ViewBag.UserId)
+            {
+              <a href="/delete/wedding/@w.WeddingId">Delete</a>
+            }else {
+            @if(w.Guests.Any (g => g.UserId == @ViewBag.UserId))
+            {
+              <a href="/leave/wedding/@w.WeddingId">Un-RSVP</a>
+            } else 
+            {
+              <a href="/join/wedding/@w.WeddingId">RSVP</a>
+            }
+          }
+          </td>
+        </tr>
+      </tbody>
+    }
+    </table>
+    
+  </div>
+</div>

@@ -56,3 +56,6 @@
 /Users/rx/Documents/CodingDojo/csharp_stack/orms/WeddingPlanner/obj/Debug/netcoreapp2.1/LoginRegistration.dll
 /Users/rx/Documents/CodingDojo/csharp_stack/orms/WeddingPlanner/obj/Debug/netcoreapp2.1/LoginRegistration.pdb
 /Users/rx/Documents/CodingDojo/csharp_stack/orms/WeddingPlanner/obj/Debug/netcoreapp2.1/LoginRegistration.csproj.CopyComplete
+/Users/rx/Documents/CodingDojo/csharp_stack/orms/WeddingPlanner/obj/Debug/netcoreapp2.1/Razor/Views/Dashboard/AddWedding.g.cshtml.cs
+/Users/rx/Documents/CodingDojo/csharp_stack/orms/WeddingPlanner/obj/Debug/netcoreapp2.1/Razor/Views/Dashboard/Dashboard.g.cshtml.cs
+/Users/rx/Documents/CodingDojo/csharp_stack/orms/WeddingPlanner/obj/Debug/netcoreapp2.1/Razor/Views/Dashboard/ViewWedding.g.cshtml.cs

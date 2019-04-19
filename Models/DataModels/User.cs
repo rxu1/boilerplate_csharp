@@ -14,7 +14,7 @@ namespace WeddingPlanner.Models
     public string FirstName { get; set; }
 
     [Required]
-    [StringLength(50, MinimumLength = 3, ErrorMessage = "Last name must be longer than 3 characters!")]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "Last name must be longer than 2 characters!")]
     public string LastName { get; set; }
 
     [EmailAddress]
@@ -23,7 +23,7 @@ namespace WeddingPlanner.Models
     
     [Required]
     [DataType(DataType.Password)]
-    [RegularExpression(@"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)).+$", ErrorMessage = "Password must contain atleast 1 uppercase, 1 lowercase and 1 number!")]
+    // [RegularExpression(@"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)).+$", ErrorMessage = "Password must contain atleast 1 uppercase, 1 lowercase and 1 number!")]
     [StringLength(255, MinimumLength = 8, ErrorMessage = "Password must at least 8 characters long!")]
     // [MinLength(8, ErrorMessage="Password must be 8 characters or longer!")]
     public string Password { get; set; }

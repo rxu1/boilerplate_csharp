@@ -31,19 +31,19 @@ namespace WeddingPlanner.Controllers
     {
       if (ModelState.IsValid)
       {
-        var userInDb = dbContext.Users.FirstOrDefault(u => u.Email == form.Email);
+        var userInDb = dbContext.Users.FirstOrDefault(u => u.Email == newUser.Email);
         if (userInDb != null)
         {
           ModelState.AddModelError("Email", "This email is already taken!");
           return View("Index");
         }
-        User newUser = new User()
-        {
-          FirstName = form.FirstName, 
-          LastName = form.LastName,
-          Password = form.Password, 
-          Email = form.Email
-        };
+        // User newUser = new User()
+        // {
+        //   FirstName = form.FirstName, 
+        //   LastName = form.LastName,
+        //   Password = form.Password, 
+        //   Email = form.Email
+        // };
         PasswordHasher<User> Hasher = new PasswordHasher<User>();
         newUser.Password = Hasher.HashPassword(newUser, newUser.Password);
 
